@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: entrepreneurial-network
+    env: php
+    buildCommand: composer install && npm install && npm run build
+    startCommand: php artisan serve --port=$PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: CACHE_DRIVER
+        value: file
+      - key: SESSION_DRIVER
+        value: file
+      - key: QUEUE_DRIVER
+        value: sync 
