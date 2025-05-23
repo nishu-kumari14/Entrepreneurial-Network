@@ -3,7 +3,7 @@ services:
     name: entrepreneurial-network
     env: php
     buildCommand: composer install && npm install && npm run build
-    startCommand: php artisan serve --port=$PORT
+    startCommand: vendor/bin/heroku-php-apache2 public/
     envVars:
       - key: APP_ENV
         value: production
