@@ -1,6 +1,6 @@
 [build]
-builder = "nixpacks"
-buildCommand = "composer install --no-dev && npm install && npm run build && php artisan optimize"
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
 
 [deploy]
 startCommand = "php artisan serve --port=$PORT --host=0.0.0.0"
