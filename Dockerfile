@@ -28,6 +28,9 @@ WORKDIR /var/www/html
 # Copy existing application directory
 COPY . .
 
+# Ensure required directories exist before installing dependencies
+RUN mkdir -p storage bootstrap/cache
+
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install
