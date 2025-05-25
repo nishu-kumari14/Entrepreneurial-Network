@@ -6,7 +6,7 @@ dockerfilePath = "Dockerfile"
 startCommand = "php artisan serve --port=$PORT --host=0.0.0.0"
 healthcheckPath = "/"
 healthcheckTimeout = 100
-restartPolicyType = "on-failure"
+restartPolicyType = "always"
 restartPolicyMaxRetries = 10
 
 [deploy.env]
