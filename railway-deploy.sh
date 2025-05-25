@@ -2,7 +2,22 @@
 
 # Wait for database to be ready
 echo "Waiting for database..."
-sleep 10
+max_attempts=30
+attempt=1
+while [ $attempt -le $max_attempts ]; do
+    if php artisan db:monitor --timeout=1 > /dev/null 2>&1; then
+        echo "Database is ready!"
+        break
+    fi
+    echo "Attempt $attempt of $max_attempts: Database not ready yet..."
+    sleep 2
+    attempt=$((attempt + 1))
+done
+
+if [ $attempt -gt $max_attempts ]; then
+    echo "Database connection failed after $max_attempts attempts"
+    exit 1
+fi
 
 # Run migrations
 echo "Running migrations..."
