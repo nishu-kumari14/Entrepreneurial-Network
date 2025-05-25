@@ -24,19 +24,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy composer files first
-COPY composer.json composer.lock ./
-
-# Install dependencies
-RUN composer install --no-scripts --no-autoloader
-
-# Copy the rest of the application
+# Copy existing application directory
 COPY . .
 
-# Generate optimized autoloader
-RUN composer dump-autoload --optimize
-
-# Install and build frontend assets
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 RUN npm run build
 
@@ -47,16 +39,15 @@ RUN chown -R www-data:www-data /var/www/html \
 
 # Configure Apache
 RUN a2enmod rewrite
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 COPY docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-# Create .env file
-RUN cp .env.example .env
-
 # Generate application key
+RUN cp .env.example .env
 RUN php artisan key:generate
 
-# Expose port 80
-EXPOSE 80
+# Expose port
+EXPOSE 8080
 
 # Start Apache
 CMD ["apache2-foreground"] 
