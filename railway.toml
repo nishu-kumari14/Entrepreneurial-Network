@@ -12,6 +12,7 @@ restartPolicyMaxRetries = 10
 [deploy.env]
 APP_ENV = "production"
 APP_DEBUG = "false"
+APP_URL = "${RAILWAY_STATIC_URL}"
 CACHE_DRIVER = "redis"
 SESSION_DRIVER = "redis"
 QUEUE_DRIVER = "redis"
